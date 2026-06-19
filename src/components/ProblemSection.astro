@@ -1,0 +1,70 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section
+  class="py-section-padding px-margin-mobile md:px-margin-desktop bg-surface-container-low/50 relative"
+  id="features"
+>
+  <div class="max-w-container-max mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+      <div
+        class="md:col-span-7 bg-white rounded-3xl border border-outline-variant p-10 bento-card relative overflow-hidden"
+      >
+        <img
+          alt="Thinking Pulsi"
+          class="absolute -right-8 -bottom-8 w-48 h-48 opacity-10 pointer-events-none"
+          src={`${base}images/problema.png`}
+        />
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 rounded-2xl bg-error-container/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;"
+              >warning</span
+            >
+          </div>
+          <h3 class="font-headline-lg text-headline-lg">El Problema de la Visibilidad</h3>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-12 max-w-lg">
+          Los líderes suelen detectar bloqueos y sobrecarga en los equipos cuando ya existen atrasos
+          o pérdida de productividad. Pulsi anticipa estas señales dispersas.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+            <span class="material-symbols-outlined text-secondary block mb-2">schedule</span>
+            <span class="text-label-sm font-label-sm">Atrasos</span>
+          </div>
+          <div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+            <span class="material-symbols-outlined text-secondary block mb-2"
+              >sentiment_dissatisfied</span
+            >
+            <span class="text-label-sm font-label-sm">Frustración</span>
+          </div>
+          <div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+            <span class="material-symbols-outlined text-secondary block mb-2">groups</span>
+            <span class="text-label-sm font-label-sm">Descoordinación</span>
+          </div>
+          <div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+            <span class="material-symbols-outlined text-secondary block mb-2">trending_down</span>
+            <span class="text-label-sm font-label-sm">Baja Eficiencia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="md:col-span-5 flex flex-col items-center gap-6">
+        <img
+          alt="Pulsi Concerned Mascot"
+          class="w-64 h-64 object-contain drop-shadow-2xl"
+          src={`${base}images/problema.png`}
+        />
+        <div
+          class="bg-white p-4 rounded-xl shadow-lg border border-outline-variant max-w-xs text-center"
+        >
+          <p class="text-label-sm text-on-surface-variant italic">
+            "¿Cómo saber si mi equipo está al límite antes de que sea tarde?"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pulse-line"></div>
+</section>

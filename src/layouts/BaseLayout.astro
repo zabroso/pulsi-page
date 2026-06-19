@@ -1,0 +1,137 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Pulsi | Entiende el pulso de tu organización',
+  description = 'Pulsi te ayuda a entender el pulso de tu organización en tiempo real, detectando señales de sobrecarga, tendencias y causas probables.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html class="scroll-smooth" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed"
+  >
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+  }
+
+  .bento-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .bento-card:hover {
+    border-color: #004ac6;
+    box-shadow: 0 10px 30px -10px rgba(0, 74, 198, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .primary-gradient {
+    background: linear-gradient(135deg, #004ac6 0%, #712ae2 100%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #004ac6 0%, #712ae2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @keyframes pulse-flow {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateX(200%);
+      opacity: 0;
+    }
+  }
+
+  .pulse-line {
+    height: 2px;
+    width: 50%;
+    background: linear-gradient(90deg, transparent, #004ac6, transparent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: pulse-flow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .macbook-mockup {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .macbook-screen {
+    background: #000;
+    border-radius: 12px;
+    padding: 2% 2% 4% 2%;
+    box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 2;
+  }
+  .macbook-base {
+    height: 12px;
+    background: #d1d5db;
+    border-radius: 0 0 20px 20px;
+    width: 110%;
+    margin-left: -5%;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 20) {
+      nav?.classList.add('py-2', 'h-16');
+      nav?.classList.remove('h-20');
+    } else {
+      nav?.classList.remove('py-2', 'h-16');
+      nav?.classList.add('h-20');
+    }
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('section').forEach((section) => {
+    section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+    observer.observe(section);
+  });
+</script>

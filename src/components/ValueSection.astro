@@ -1,0 +1,59 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop bg-white relative">
+  <div class="max-w-container-max mx-auto relative">
+    <img
+      alt="Pulsi Benefits"
+      class="absolute -right-12 -top-24 w-40 h-40 hidden lg:block opacity-80"
+      src={`${base}images/beneficios.png`}
+    />
+    <h2 class="text-center font-headline-xl text-headline-xl mb-16 max-w-3xl mx-auto">
+      Más visibilidad. <br class="hidden md:block" /> Decisiones oportunas. <br
+        class="hidden md:block"
+      /> Equipos más equilibrados.
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+      <div
+        class="p-10 rounded-3xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center bento-card"
+      >
+        <div class="w-16 h-16 rounded-2xl bg-primary-container/10 flex items-center justify-center mb-6">
+          <span class="material-symbols-outlined text-primary text-4xl">radar</span>
+        </div>
+        <h3 class="font-headline-lg text-headline-lg mb-4">Detecta</h3>
+        <p class="text-on-surface-variant font-body-md">
+          Identifica señales tempranas antes de que se conviertan en problemas.
+        </p>
+      </div>
+
+      <div
+        class="p-10 rounded-3xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center bento-card"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-secondary-container/10 flex items-center justify-center mb-6"
+        >
+          <span class="material-symbols-outlined text-secondary text-4xl">search</span>
+        </div>
+        <h3 class="font-headline-lg text-headline-lg mb-4">Comprende</h3>
+        <p class="text-on-surface-variant font-body-md">
+          Visualiza tendencias, causas probables y factores recurrentes.
+        </p>
+      </div>
+
+      <div
+        class="p-10 rounded-3xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center bento-card"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-tertiary-container/10 flex items-center justify-center mb-6"
+        >
+          <span class="material-symbols-outlined text-tertiary text-4xl">task_alt</span>
+        </div>
+        <h3 class="font-headline-lg text-headline-lg mb-4">Actúa</h3>
+        <p class="text-on-surface-variant font-body-md">
+          Recibe recomendaciones concretas para apoyar mejores decisiones.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

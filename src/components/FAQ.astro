@@ -1,0 +1,46 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop" id="faq">
+  <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <div class="flex-1">
+      <img
+        alt="FAQ Pulsi"
+        class="w-full max-w-[280px] mx-auto drop-shadow-xl"
+        src={`${base}images/FAQ.png`}
+      />
+    </div>
+
+    <div class="flex-[2] w-full">
+      <h2 class="font-headline-xl text-headline-xl mb-10">Preguntas Frecuentes</h2>
+      <div class="space-y-4">
+        <details class="group p-6 bg-white rounded-2xl border border-outline-variant cursor-pointer">
+          <summary class="font-bold flex justify-between items-center list-none">
+            ¿Es anónimo el feedback del equipo?
+            <span class="material-symbols-outlined group-open:rotate-180 transition-transform"
+              >expand_more</span
+            >
+          </summary>
+          <p class="mt-4 text-on-surface-variant">
+            Sí, la privacidad es nuestra prioridad. Los líderes ven tendencias y datos agregados
+            para proteger la confidencialidad individual.
+          </p>
+        </details>
+
+        <details class="group p-6 bg-white rounded-2xl border border-outline-variant cursor-pointer">
+          <summary class="font-bold flex justify-between items-center list-none">
+            ¿Cuánto tiempo toma la implementación?
+            <span class="material-symbols-outlined group-open:rotate-180 transition-transform"
+              >expand_more</span
+            >
+          </summary>
+          <p class="mt-4 text-on-surface-variant">
+            Puedes estar configurado en menos de 5 minutos. Solo necesitas sincronizar a tu equipo y
+            Pulsi hará el resto.
+          </p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>

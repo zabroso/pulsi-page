@@ -1,0 +1,26 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop bg-surface-container-low/30">
+  <div class="max-w-container-max mx-auto text-center relative">
+    <img
+      alt="Testimonials Pulsi"
+      class="w-32 h-32 mx-auto mb-6 opacity-90"
+      src={`${base}images/testimonios.png`}
+    />
+    <h2 class="font-headline-xl text-headline-xl mb-12">
+      Lo que dicen los líderes que cuidan a su gente
+    </h2>
+    <div
+      class="max-w-3xl mx-auto p-12 bg-white rounded-[40px] border border-outline-variant shadow-lg relative italic font-body-lg text-body-lg text-on-surface"
+    >
+      "Pulsi nos ha permitido detectar cuellos de botella antes de que afecten la moral del equipo.
+      Es como tener un sexto sentido para el bienestar de nuestra organización."
+      <div class="mt-8 not-italic">
+        <p class="font-bold text-primary">Claudia Méndez</p>
+        <p class="text-label-sm text-on-surface-variant">Directora de Operaciones, TechScale</p>
+      </div>
+    </div>
+  </div>
+</section>
