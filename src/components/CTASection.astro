@@ -1,6 +1,5 @@
 ---
 const base = import.meta.env.BASE_URL;
-const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
 <section
@@ -173,12 +172,11 @@ const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
   </div>
 </section>
 
-<script define:vars={{ RECAPTCHA_SITE_KEY }}>
+<script>
   const form = document.getElementById('demo-form');
   const submitBtn = document.getElementById('submit-btn');
   const btnLabel = document.getElementById('btn-label');
   const btnLoading = document.getElementById('btn-loading');
-  const formError = document.getElementById('form-error');
   const formContainer = document.getElementById('form-container');
   const successContainer = document.getElementById('success-container');
 
@@ -212,40 +210,23 @@ const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
       el.classList.add('border-outline-variant');
     });
     form.querySelectorAll('.field-error').forEach((el) => el.classList.add('hidden'));
-    formError.classList.add('hidden');
   }
 
   function validate(fields) {
     let valid = true;
-
-    if (!fields.nombre) {
-      setFieldError('nombre', 'El nombre es requerido.');
-      valid = false;
-    }
-    if (!fields.apellido) {
-      setFieldError('apellido', 'El apellido es requerido.');
-      valid = false;
-    }
-    if (!fields.empresa) {
-      setFieldError('empresa', 'El nombre de la empresa es requerido.');
-      valid = false;
-    }
-    if (!fields.tamano) {
-      setFieldError('tamano', 'Selecciona el tamaño del equipo.');
-      valid = false;
-    }
+    if (!fields.nombre) { setFieldError('nombre', 'El nombre es requerido.'); valid = false; }
+    if (!fields.apellido) { setFieldError('apellido', 'El apellido es requerido.'); valid = false; }
+    if (!fields.empresa) { setFieldError('empresa', 'El nombre de la empresa es requerido.'); valid = false; }
+    if (!fields.tamano) { setFieldError('tamano', 'Selecciona el tamaño del equipo.'); valid = false; }
     if (!fields.email) {
-      setFieldError('email', 'El correo es requerido.');
-      valid = false;
+      setFieldError('email', 'El correo es requerido.'); valid = false;
     } else if (!EMAIL_REGEX.test(fields.email)) {
-      setFieldError('email', 'Ingresa un correo válido (ej: tu@empresa.com).');
-      valid = false;
+      setFieldError('email', 'Ingresa un correo válido (ej: tu@empresa.com).'); valid = false;
     }
-
     return valid;
   }
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     clearAllErrors();
 
@@ -262,32 +243,18 @@ const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 
     setLoading(true);
 
-    try {
-      const recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
-        action: 'submit_demo',
-      });
+    const subject = encodeURIComponent(`Nueva solicitud de demo — ${fields.empresa}`);
+    const body = encodeURIComponent(
+      `Nombre: ${fields.nombre} ${fields.apellido}\n` +
+      `Empresa: ${fields.empresa}\n` +
+      `Tamaño del equipo: ${fields.tamano}\n` +
+      `Correo de contacto: ${fields.email}` +
+      (fields.mensaje ? `\n\nMensaje:\n${fields.mensaje}` : '')
+    );
 
-      const res = await fetch('/api/send-demo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...fields, recaptchaToken }),
-      });
+    window.location.href = `mailto:contacto@pulsi.cl?subject=${subject}&body=${body}&reply-to=${encodeURIComponent(fields.email)}`;
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || 'Error desconocido');
-
-      formContainer.classList.add('hidden');
-      successContainer.classList.remove('hidden');
-    } catch (err) {
-      formError.textContent = err.message || 'Ocurrió un error. Intenta nuevamente.';
-      formError.classList.remove('hidden');
-      setLoading(false);
-    }
+    formContainer.classList.add('hidden');
+    successContainer.classList.remove('hidden');
   });
 </script>
-
-<script
-  is:inline
-  src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
-></script>
