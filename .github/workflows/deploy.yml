@@ -25,6 +25,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.PUBLIC_RECAPTCHA_SITE_KEY }}
         run: npm run build
 
       - uses: actions/upload-artifact@v4
@@ -75,3 +77,28 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PULSI_2E80D }}
           channelId: live
           projectId: pulsi-2e80d
+
+  deploy-functions:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PULSI_2E80D }}
+
+      - name: Install function dependencies
+        run: npm ci --prefix functions
+
+      - name: Deploy functions
+        run: npx firebase-tools deploy --only functions --project pulsi-2e80d

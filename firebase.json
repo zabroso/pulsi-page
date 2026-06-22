@@ -10,7 +10,10 @@
     "rewrites": [
       {
         "source": "/api/send-demo",
-        "function": "sendDemoEmail"
+        "function": {
+          "functionId": "sendDemoEmail",
+          "region": "us-central1"
+        }
       }
     ]
   }
