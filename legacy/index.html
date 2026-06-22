@@ -1,0 +1,520 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pulsi | Entiende el pulso de tu organización</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-fixed": "#001e2c",
+                        "surface-container-low": "#f2f4f6",
+                        "primary": "#004ac6",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-tertiary-container": "#e1f2ff",
+                        "on-tertiary-fixed-variant": "#004c69",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-container": "#2563eb",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "primary-fixed": "#dbe1ff",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "outline": "#737686",
+                        "on-surface-variant": "#434655",
+                        "secondary-fixed": "#eaddff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#8a4cfc",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary-fixed": "#c4e7ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-fixed-dim": "#7bd0ff",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-container": "#fffbff",
+                        "on-primary-container": "#eeefff",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed": "#25005a",
+                        "surface-container": "#eceef0",
+                        "secondary": "#712ae2",
+                        "on-surface": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "surface": "#f7f9fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "background": "#f7f9fb",
+                        "tertiary-container": "#00759f",
+                        "tertiary": "#005b7c",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "section-padding": "96px",
+                        "margin-desktop": "48px",
+                        "base": "8px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .bento-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            border-color: #004ac6;
+            box-shadow: 0 10px 30px -10px rgba(0, 74, 198, 0.15);
+            transform: translateY(-4px);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #004ac6 0%, #712ae2 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #004ac6 0%, #712ae2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        @keyframes pulse-flow {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateX(200%); opacity: 0; }
+        }
+        .pulse-line {
+            height: 2px;
+            width: 50%;
+            background: linear-gradient(90deg, transparent, #004ac6, transparent);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            animation: pulse-flow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .macbook-mockup {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .macbook-screen {
+            background: #000;
+            border-radius: 12px;
+            padding: 2% 2% 4% 2%;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.25);
+            position: relative;
+            z-index: 2;
+        }
+        .macbook-base {
+            height: 12px;
+            background: #d1d5db;
+            border-radius: 0 0 20px 20px;
+            width: 110%;
+            margin-left: -5%;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<nav class="fixed top-0 w-full z-50 glass-nav border-b border-outline-variant/30 shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<a class="flex items-center gap-2 group" href="#">
+<img alt="Pulsi Logo" class="h-10 w-10 object-contain transition-transform group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVsl2cTYkleeEINmNjmSQdFPFf9F4vwpQoXcTQrt708mW12yH0gHzSKj2e4D0bphlHjDruIczbr2vSulCzGQL3pS8LsTd49w3yy3kltmuUgQZXyM7MqKzDqYi-m4uMyPqTcdPP-6eGkik1Lr9XAbef6XMvurVOWHbLHGcxtVmxb_vrHF_a2pquO3pRCmeKhyOY9rMTuZcUtOO3Rv69j-59jSYnUKlQ0fGEDi4hsJ9mPGE2nyjSsqW4gObSiRlXGytSfzG1uQU366zJ">
+<span class="text-headline-xl font-headline-xl font-bold text-primary">Pulsi</span>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#features">Platform</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#solutions">Features</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#case-studies">Case Studies</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#faq">FAQ</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden sm:block font-label-md text-label-md text-primary font-bold px-4 py-2 hover:bg-primary-container/10 rounded-lg transition-all">Login</button>
+<button class="primary-gradient text-on-primary font-label-md text-label-md font-bold px-6 py-3 rounded-full shadow-lg shadow-primary/20 scale-100 hover:scale-105 active:scale-95 transition-transform">Request Demo</button>
+</div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-12 pb-24 md:pt-24 md:pb-32 px-margin-mobile md:px-margin-desktop transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="z-10 relative">
+<!-- Welcome Mascot -->
+<img alt="Pulsi Mascot Hero" class="w-32 h-32 absolute -top-24 left-0 animate-bounce hidden md:block opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBY_ZkijhaqW8dtLKfe7I66vX9eI2aa9f7IuKYPT8pSvnH5g06817WiN8sx8wv81O5xjvy0fOUpROlxo0-J19nrh8eNk1nr1kaGDnl7drnp5qZFd4TPTXsXt7WsKZbI1qzIqi9pK1PY45vlxWTPWKOSVsqvZ2iy3TejteeHHA4xd03yFM5fD-vL9OYdNfMT-CFp5nyWAkZgz8nnts7QgH74gSAv14K6c4N0uzuEukSdfdfXvbQPeaKQlHvEVG6g70UX1pCYPx9W7nY">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-label-sm font-label-sm mb-6">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                    IA de Bienestar Organizacional
+                </div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-6 tracking-tight leading-tight">Convierte señales del equipo en decisiones oportunas.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-xl">
+                    Pulsi te ayuda a entender el pulso de tu organización en tiempo real, detectando señales de sobrecarga, tendencias y causas probables para actuar antes de que los problemas escalen.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="primary-gradient text-on-primary font-label-md text-label-md font-bold px-8 py-4 rounded-full shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all">Solicitar Demo</button>
+<button class="bg-white border border-outline-variant text-on-surface font-label-md text-label-md font-bold px-8 py-4 rounded-full hover:bg-surface transition-all flex items-center justify-center gap-2">
+                        Ver Plataforma <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="relative">
+<div class="macbook-mockup">
+<div class="macbook-screen overflow-hidden">
+<img alt="Pulsi Dashboard" class="w-full h-full object-cover rounded-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzqPxkzy6sKWPVgCwq-VrmNhmvaBihnlwh2jD_b2roSK_HO_JL2u9xmACV6p4ez1UHjXrmHTKfeggAzF79NPs_TtfJOjIc7p8ojGQt3wpwRoKGxw5SnFcgSSgnEw3ay-iemuzYJCPpa2LGa8ZmDXQ7cTTcI5kIPoVMRfFenc9_H4Ti4xOwi5ZK-BVGR1a8O3DgXqITR6BPmi2d9VZCc4nD3SCmisTXRTR1GbYBcWRWQmdX_fW7Rr5p5Na2_E0s7WIatbHw5SHpZiHFh94">
+</div>
+<div class="macbook-base"></div>
+</div>
+<!-- Floating KPI -->
+<div class="absolute -top-6 -right-6 bg-white/90 backdrop-blur rounded-xl border border-outline-variant p-4 shadow-lg z-30">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">trending_up</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Bienestar</p>
+<p class="text-headline-lg font-headline-lg text-primary">7.8/10</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pulse-line"></div>
+</section>
+<!-- Value Section (Benefits) -->
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop bg-white relative transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0">
+<div class="max-w-container-max mx-auto relative">
+<!-- Results Celebration Mascot -->
+<img alt="Pulsi Benefits" class="absolute -right-12 -top-24 w-40 h-40 hidden lg:block opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNk0-lnu_5dpRAFzxReks6QqyR-0uyrfJj-XglH0z02K32ucK3gS03-BDOs5oiLDkZG7ATUGhlOHav3I8AT_jNez-AiYTcDQesyZ_xz3NHflGN4l-3NdVq6U7-NU6N7lRJ9VY8MAA-72AWhboO7kVhKGYn8Qv42XEHWEqPh3QPZG7U2V-GIVuaGD_Ay7b1jpf0s8O6qR0MHvC9wEXBnDVD9Jzfpl2COgTHGGW38otWbdM6NZqxqrR9psREJclEWNs6nu26mVVLgrja">
+<h2 class="text-center font-headline-xl text-headline-xl mb-16 max-w-3xl mx-auto">
+                Más visibilidad. <br class="hidden md:block"> Decisiones oportunas. <br class="hidden md:block"> Equipos más equilibrados.
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="p-10 rounded-3xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center bento-card">
+<div class="w-16 h-16 rounded-2xl bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-4xl">radar</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-4">Detecta</h3>
+<p class="text-on-surface-variant font-body-md">Identifica señales tempranas antes de que se conviertan en problemas.</p>
+</div>
+<div class="p-10 rounded-3xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center bento-card">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-secondary text-4xl">search</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-4">Comprende</h3>
+<p class="text-on-surface-variant font-body-md">Visualiza tendencias, causas probables y factores recurrentes.</p>
+</div>
+<div class="p-10 rounded-3xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center bento-card">
+<div class="w-16 h-16 rounded-2xl bg-tertiary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-tertiary text-4xl">task_alt</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-4">Actúa</h3>
+<p class="text-on-surface-variant font-body-md">Recibe recomendaciones concretas para apoyar mejores decisiones.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop bg-surface-container-low/50 relative transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0" id="features">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-7 bg-white rounded-3xl border border-outline-variant p-10 bento-card relative overflow-hidden">
+<!-- Thinking Mascot -->
+<img alt="Thinking Pulsi" class="absolute -right-8 -bottom-8 w-48 h-48 opacity-10 pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHwq44uI4Shf7snYjP03MWDvAQthg0vfo_f_BAksvgZxk_xhezyyS1GgVtxTcows_5SaIItLJXTrG8u-mY3MDUbfjgk3BlrYrPwK-ynQdQQ2-tTH32sgiM9XZkAQ6YOUhzfefh9MyxryOGE6TVX4M6pz_iKETjlF-o7r4BijqbZP5FEbahGntt426SbYOx6TuiEZOTPb2kiFKovEGzhlxuKUA3UC7cIs58l_d-kMYrhCFb4v9Y6KES8F89_bIn424stmTqu9ijXM_1">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded-2xl bg-error-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg">El Problema de la Visibilidad</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12 max-w-lg">
+                        Los líderes suelen detectar bloqueos y sobrecarga en los equipos cuando ya existen atrasos o pérdida de productividad. Pulsi anticipa estas señales dispersas.
+                    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-secondary block mb-2">schedule</span>
+<span class="text-label-sm font-label-sm">Atrasos</span>
+</div>
+<div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-secondary block mb-2">sentiment_dissatisfied</span>
+<span class="text-label-sm font-label-sm">Frustración</span>
+</div>
+<div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-secondary block mb-2">groups</span>
+<span class="text-label-sm font-label-sm">Descoordinación</span>
+</div>
+<div class="p-4 bg-surface rounded-2xl border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-secondary block mb-2">trending_down</span>
+<span class="text-label-sm font-label-sm">Baja Eficiencia</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-5 flex flex-col items-center gap-6">
+<!-- Concerned Mascot Integrated -->
+<img alt="Pulsi Concerned Mascot" class="w-64 h-64 object-contain drop-shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHwq44uI4Shf7snYjP03MWDvAQthg0vfo_f_BAksvgZxk_xhezyyS1GgVtxTcows_5SaIItLJXTrG8u-mY3MDUbfjgk3BlrYrPwK-ynQdQQ2-tTH32sgiM9XZkAQ6YOUhzfefh9MyxryOGE6TVX4M6pz_iKETjlF-o7r4BijqbZP5FEbahGntt426SbYOx6TuiEZOTPb2kiFKovEGzhlxuKUA3UC7cIs58l_d-kMYrhCFb4v9Y6KES8F89_bIn424stmTqu9ijXM_1">
+<div class="bg-white p-4 rounded-xl shadow-lg border border-outline-variant max-w-xs text-center">
+<p class="text-label-sm text-on-surface-variant italic">"¿Cómo saber si mi equipo está al límite antes de que sea tarde?"</p>
+</div>
+</div>
+</div>
+</div>
+<div class="pulse-line"></div>
+</section>
+<!-- Human Approach Section (Solutions) -->
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0" id="solutions">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col lg:flex-row gap-20 items-center">
+<div class="flex-1">
+<h2 class="font-headline-xl text-headline-xl mb-6">Un enfoque humano para datos precisos</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+                        Transformamos la recolección de datos en una conversación amigable. Pulsi interactúa con el equipo de forma empática, garantizando una alta participación y sinceridad.
+                    </p>
+<div class="space-y-6">
+<!-- Riesgos -->
+<div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant bento-card relative group">
+<img alt="Riesgos Pulsi" class="w-20 h-20 absolute -right-4 -top-4 hidden group-hover:block transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx2s2h9ruIFkrHBje84QB8_jB3SV6AvEYDP-9xrDGSTwNM2zwQKJGKWNohFCLjsqVcskaOSEdeqUei5-Ya6QVpK_tE9Cb8teZkW5ZtYeVHosEAujLWLSKtgSbFJYXJCqHAtzLUCULpPG-EhwUyF3hyUxIKHUhJzU7xQ8xL1yAWrPgqcVIgyPVo0Ij5HCkV6ETvukbajLXt6MSFCigBHtgN06WGxuFfvvo5EbHvWdIhM1_Fb3CxRoiUh3GITzTdOprc8HAMf_xwWp9U">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-1">Riesgos Psicosociales</h4>
+<p class="text-body-md text-on-surface-variant">Monitoreo constante de carga mental, apoyo y claridad de rol.</p>
+</div>
+</div>
+<!-- IA Insights -->
+<div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant bento-card relative group">
+<img alt="IA Insights Pulsi" class="w-20 h-20 absolute -right-4 -top-4 hidden group-hover:block transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD6NqBlGbdhhpNwBimYwVEXJZiT-5st6qHlqcNTJp7U1RqAxnkW1V9uTlLyEjqnbaplsOYL9cTzFf6j8SH8y6wkyPQeOtkUgW-ywWucJ8orQ7Dqz7wY_c4D95nqkwlKrhmd8dj_baMJK1nfqXsQf-B9OTF6x03SHn2f9_q33GZrWqOtdI1V6FESKWAEb9Sl5P5ZepzRjYUgphgtHYExkh3l51cQNaHDUvcXIC3BF-eAz0OuS688nXKzJaAsqqDpQdE190EhKCGVZat">
+<span class="material-symbols-outlined text-primary text-3xl">analytics</span>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-1">Insights Generados por IA</h4>
+<p class="text-body-md text-on-surface-variant">Alertas preventivas basadas en tendencias históricas y comparativas.</p>
+</div>
+</div>
+<!-- Continuous Monitoring -->
+<div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant bento-card relative group">
+<img alt="Monitoring Pulsi" class="w-20 h-20 absolute -right-4 -top-4 hidden group-hover:block transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnAU5nGiQ-R2Fr8nQsnHOeJP0Cj1XEl69AK5HKy6W3_s2UD_zQ8iGjAVcw6Q9VHLgqCLNvpb4gmBHxB5tWmg8Qof4zsWPZMgoLq8mnvZYEEqUTwP3IeTPdXAMPEzbQFtNWH2F_zowrdr-V3sId2RB7jwZkjIHAb5WlljnGBwRFyBp4c174c089JVTS-pls3bzGwVJ4fxPpVIYkAQI6beIVADcElCyplqS8oQl4WxbKLhkB6xdcUA8fRFcyKLERAuHjVOtl2vpVEk0Y">
+<span class="material-symbols-outlined text-primary text-3xl">update</span>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-1">Monitoreo en Tiempo Real</h4>
+<p class="text-body-md text-on-surface-variant">Visualiza el pulso de tu equipo minuto a minuto sin fricciones.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full bg-white rounded-3xl border border-outline-variant shadow-xl overflow-hidden p-8 md:p-12 relative">
+<!-- Dashboard Visual Mascot -->
+<img alt="Dashboard Guide" class="w-32 h-32 absolute -top-8 -right-8 opacity-40 z-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeSOQfXDb9AATbKCfWg2LvuG2bVYfWD1oG-rlNcAxIXMUUgLzuq76A5hnUAmZR3umjIzJNtuzv14T_yl4lLyb_7Pjdz7tBnprujtNI6Eky28rmrpWY7shfblFlrefEZHclW9G557ZsuQM67-k37ynM2N0qehIHMyMrQxZoFYGCDspX5iAucg_2ur_DBDuNuQiktVGVA1qNRrIkiiEDx35zepHP_qNbujQx9AXLzgnxzgonBwZDJ7OGkr277adeKt41UX2Ne1tD0U6U">
+<div class="space-y-8 relative z-10">
+<div class="flex justify-between items-center mb-4">
+<span class="text-label-md font-label-md text-on-surface-variant">Pulso Semanal</span>
+<div class="flex gap-1">
+<div class="w-8 h-1 rounded-full bg-primary"></div>
+<div class="w-8 h-1 rounded-full bg-primary"></div>
+<div class="w-8 h-1 rounded-full bg-primary/20"></div>
+<div class="w-8 h-1 rounded-full bg-primary/20"></div>
+</div>
+</div>
+<p class="text-headline-lg font-headline-lg text-center">¿Cuánto esfuerzo te tomó cumplir con tu trabajo esta semana?</p>
+<div class="flex justify-between gap-2 overflow-x-auto pb-2">
+<button class="flex-shrink-0 flex flex-col items-center gap-2 p-4 min-w-[70px] rounded-xl border border-outline-variant hover:border-primary transition-colors group">
+<span class="text-3xl grayscale group-hover:grayscale-0 transition-all">😊</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">1</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-2 p-4 min-w-[70px] rounded-xl border border-outline-variant hover:border-primary transition-colors group">
+<span class="text-3xl grayscale group-hover:grayscale-0 transition-all">🙂</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">2</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-2 p-4 min-w-[70px] rounded-xl border border-outline-variant hover:border-primary transition-colors group">
+<span class="text-3xl grayscale group-hover:grayscale-0 transition-all">😐</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">3</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-2 p-4 min-w-[70px] rounded-xl border-primary bg-primary-container/10">
+<span class="text-3xl">😟</span>
+<span class="text-label-sm font-label-sm text-primary">4</span>
+</button>
+<button class="flex-shrink-0 flex flex-col items-center gap-2 p-4 min-w-[70px] rounded-xl border border-outline-variant hover:border-primary transition-colors group">
+<span class="text-3xl grayscale group-hover:grayscale-0 transition-all">😫</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">5</span>
+</button>
+</div>
+<div class="bg-surface-container rounded-xl p-4 flex gap-3 items-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Un esfuerzo alto sostenido puede generar desgaste. Es importante revisarlo.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop bg-surface-container-low/30 transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0">
+<div class="max-w-container-max mx-auto text-center relative">
+<img alt="Testimonials Pulsi" class="w-32 h-32 mx-auto mb-6 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJIhw9sJko6DzrYLmKFLDNCsdH18D49buhxXSRfQ5sJ4DXEBhAbajG8olaJ-Exo2DOH2sAQOscxqt7tv1CYt6B7Ir2NjE5QseF4ItPM-DE7Uhwa4Gzr2bhMwFC0CunQhnCKeG_KjNpMVG96_NuwlnSNMycTt4FRH9cA-9VEZ6Je5g19xGZOtzk1_I5zr4Dmarxj_b7jrvbt-LSS3merH_d5N8as4q0CCvN6_jeK2s6HaPjell8sItOz6dVoNwMINwmogdcqJwbcQG3">
+<h2 class="font-headline-xl text-headline-xl mb-12">Lo que dicen los líderes que cuidan a su gente</h2>
+<div class="max-w-3xl mx-auto p-12 bg-white rounded-[40px] border border-outline-variant shadow-lg relative italic font-body-lg text-body-lg text-on-surface">
+                "Pulsi nos ha permitido detectar cuellos de botella antes de que afecten la moral del equipo. Es como tener un sexto sentido para el bienestar de nuestra organización."
+                <div class="mt-8 not-italic">
+<p class="font-bold text-primary">Claudia Méndez</p>
+<p class="text-label-sm text-on-surface-variant">Directora de Operaciones, TechScale</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0" id="faq">
+<div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+<div class="flex-1">
+<img alt="FAQ Pulsi" class="w-full max-w-[280px] mx-auto drop-shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqt1tWu6Apo4ZyyKGrwUOKd0bGYhJ1mJz5qTYQ0XQhtPDRUxdwRu3SHS-f_tN5bT9PeqlUS2x-98tOcrNyijJ7vg52YqO8_H_GL-wKf7i-H7fjkar9A64XudXJFFHIjT6w89qiwr56QuLnetio5ye4M27_YpOKwHYfFZPvVoLYzVHb_nDOv8vdxcfcWnU2RNUoosfeRe4CPbgo2UOjf5M3mSjOq16V_-yNoMmmZwU_QtHMs-Q5h0K4dk_09nZcfYkygAyK8vdFB4UB">
+</div>
+<div class="flex-[2] w-full">
+<h2 class="font-headline-xl text-headline-xl mb-10">Preguntas Frecuentes</h2>
+<div class="space-y-4">
+<details class="group p-6 bg-white rounded-2xl border border-outline-variant cursor-pointer">
+<summary class="font-bold flex justify-between items-center list-none">
+                            ¿Es anónimo el feedback del equipo?
+                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-4 text-on-surface-variant">Sí, la privacidad es nuestra prioridad. Los líderes ven tendencias y datos agregados para proteger la confidencialidad individual.</p>
+</details>
+<details class="group p-6 bg-white rounded-2xl border border-outline-variant cursor-pointer">
+<summary class="font-bold flex justify-between items-center list-none">
+                            ¿Cuánto tiempo toma la implementación?
+                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-4 text-on-surface-variant">Puedes estar configurado en menos de 5 minutos. Solo necesitas sincronizar a tu equipo y Pulsi hará el resto.</p>
+</details>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-section-padding px-margin-mobile md:px-margin-desktop relative overflow-hidden bg-surface-container-low transition-all duration-700 opacity-0 translate-y-8 opacity-100 translate-y-0">
+<div class="max-w-4xl mx-auto text-center bg-white rounded-[40px] border border-outline-variant p-12 md:p-20 relative shadow-2xl overflow-hidden">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-background border-4 border-white rounded-full flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">celebration</span>
+</div>
+<!-- Demo Mascot Integration -->
+<div class="absolute -bottom-6 -left-6 w-56 h-56 hidden lg:block hover:scale-110 transition-transform pointer-events-none">
+<img alt="Pulsi Mascot Demo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANKOY4ot5K1Rz2wQLdENc-o4Cgdw4zJkR_hHksWfb9KgzUvzRSuyCb2S1ustY59NGc-oCoWlymt6x5KQEj7sVtg40NgFTJc-QUVGZlAxnH5wbMcimN7nbt24C9gzAiHSBcHDU1oc9UQvkmbJedzgan3QIBWUga1lb6qqg9nYA18rcqNq636D846lQB__EJ9o9X0AQYHwN494LbrzUkFVJLuIcRz_Le9ZlgIjBQoDQxlt_gBaM6dQ4iNf5tDMMi25kB77x4fkb69dPL">
+</div>
+<h2 class="font-display-lg-mobile md:font-headline-xl text-headline-xl mb-6">Empieza a entender lo que ocurre en tu organización</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10">
+                Únete a los líderes que están transformando la cultura de sus equipos con evidencia real y humana.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="primary-gradient text-on-primary font-label-md text-label-md font-bold px-10 py-5 rounded-full shadow-2xl shadow-primary/40 hover:scale-105 transition-all">Solicitar Demo Personalizada</button>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Sin compromisos • Configuración en 5 min</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-container-lowest border-t border-outline-variant/50 w-full mt-24">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-section-padding max-w-container-max mx-auto">
+<div class="md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<img alt="Pulsi Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVsl2cTYkleeEINmNjmSQdFPFf9F4vwpQoXcTQrt708mW12yH0gHzSKj2e4D0bphlHjDruIczbr2vSulCzGQL3pS8LsTd49w3yy3kltmuUgQZXyM7MqKzDqYi-m4uMyPqTcdPP-6eGkik1Lr9XAbef6XMvurVOWHbLHGcxtVmxb_vrHF_a2pquO3pRCmeKhyOY9rMTuZcUtOO3Rv69j-59jSYnUKlQ0fGEDi4hsJ9mPGE2nyjSsqW4gObSiRlXGytSfzG1uQU366zJ">
+<span class="text-headline-lg font-headline-lg font-extrabold text-primary">Pulsi</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mb-6">Cuidamos a las personas. Impulsamos resultados.</p>
+</div>
+<div>
+<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-6">Product</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Platform</a></li>
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Integrations</a></li>
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-6">Company</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">About Us</a></li>
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Careers</a></li>
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Blog</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-6">Support</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#faq">Help Center</a></li>
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li class=""><a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop py-8 border-t border-outline-variant/30 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant">
+<span class="">© 2024 Pulsi. Todos los derechos reservados.</span>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Twitter</a>
+<a class="hover:text-primary transition-colors" href="#">LinkedIn</a>
+</div>
+</div>
+</footer>
+<script>
+    document.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 20) {
+            nav.classList.add('py-2', 'h-16');
+            nav.classList.remove('h-20');
+        } else {
+            nav.classList.remove('py-2', 'h-16');
+            nav.classList.add('h-20');
+        }
+    });
+
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+        observer.observe(section);
+    });
+</script>
+
+
+</body></html>
