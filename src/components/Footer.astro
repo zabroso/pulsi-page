@@ -1,10 +1,11 @@
 ---
 const base = import.meta.env.BASE_URL;
+const year = new Date().getFullYear();
 ---
 
 <footer class="bg-surface-container-lowest border-t border-outline-variant/50 w-full mt-24">
   <div
-    class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-section-padding max-w-container-max mx-auto"
+    class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-desktop py-section-padding max-w-container-max mx-auto"
   >
     <div class="md:col-span-1">
       <div class="flex items-center gap-2 mb-6">
@@ -22,25 +23,25 @@ const base = import.meta.env.BASE_URL;
 
     <div>
       <h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-6">
-        Product
+        Navegación
       </h4>
       <ul class="space-y-4">
         <li>
           <a
             class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Platform</a
+            href="#features">El Problema</a
           >
         </li>
         <li>
           <a
             class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Integrations</a
+            href="#solutions">Soluciones</a
           >
         </li>
         <li>
           <a
             class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Pricing</a
+            href="#faq">Preguntas frecuentes</a
           >
         </li>
       </ul>
@@ -48,51 +49,13 @@ const base = import.meta.env.BASE_URL;
 
     <div>
       <h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-6">
-        Company
+        Contacto
       </h4>
       <ul class="space-y-4">
         <li>
           <a
             class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">About Us</a
-          >
-        </li>
-        <li>
-          <a
-            class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Careers</a
-          >
-        </li>
-        <li>
-          <a
-            class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Blog</a
-          >
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-6">
-        Support
-      </h4>
-      <ul class="space-y-4">
-        <li>
-          <a
-            class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#faq">Help Center</a
-          >
-        </li>
-        <li>
-          <a
-            class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Privacy Policy</a
-          >
-        </li>
-        <li>
-          <a
-            class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors"
-            href="#">Terms of Service</a
+            href="mailto:contacto@pulsi.cl">contacto@pulsi.cl</a
           >
         </li>
       </ul>
@@ -100,12 +63,8 @@ const base = import.meta.env.BASE_URL;
   </div>
 
   <div
-    class="max-w-container-max mx-auto px-margin-desktop py-8 border-t border-outline-variant/30 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant"
+    class="max-w-container-max mx-auto px-margin-desktop py-8 border-t border-outline-variant/30 flex justify-center items-center text-label-sm font-label-sm text-on-surface-variant"
   >
-    <span>© 2024 Pulsi. Todos los derechos reservados.</span>
-    <div class="flex gap-6">
-      <a class="hover:text-primary transition-colors" href="#">Twitter</a>
-      <a class="hover:text-primary transition-colors" href="#">LinkedIn</a>
-    </div>
+    <span>© {year} Pulsi. Todos los derechos reservados.</span>
   </div>
 </footer>

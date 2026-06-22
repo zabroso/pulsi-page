@@ -1,12 +1,14 @@
 ---
 const base = import.meta.env.BASE_URL;
+const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
 <section
+  id="demo"
   class="py-section-padding px-margin-mobile md:px-margin-desktop relative overflow-hidden bg-surface-container-low"
 >
   <div
-    class="max-w-4xl mx-auto text-center bg-white rounded-[40px] border border-outline-variant p-12 md:p-20 relative shadow-2xl overflow-hidden"
+    class="max-w-4xl mx-auto text-center bg-white rounded-[40px] border border-outline-variant p-12 md:p-20 relative shadow-2xl"
   >
     <div
       class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-background border-4 border-white rounded-full flex items-center justify-center shadow-lg"
@@ -27,22 +29,265 @@ const base = import.meta.env.BASE_URL;
       />
     </div>
 
-    <h2 class="font-display-lg-mobile md:font-headline-xl text-headline-xl mb-6">
-      Empieza a entender lo que ocurre en tu organización
-    </h2>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mb-10">
-      Únete a los líderes que están transformando la cultura de sus equipos con evidencia real y
-      humana.
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <button
-        class="primary-gradient text-on-primary font-label-md text-label-md font-bold px-10 py-5 rounded-full shadow-2xl shadow-primary/40 hover:scale-105 transition-all"
+    <!-- Estado inicial: formulario -->
+    <div id="form-container">
+      <h2 class="font-display-lg-mobile md:font-headline-xl text-headline-xl mb-4">
+        Solicita tu demo personalizada
+      </h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mb-10">
+        Cuéntanos sobre tu organización y te mostramos cómo Pulsi puede ayudarte.
+      </p>
+
+      <form
+        id="demo-form"
+        class="text-left grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto"
+        novalidate
       >
-        Solicitar Demo Personalizada
-      </button>
-      <p class="text-label-sm font-label-sm text-on-surface-variant">
-        Sin compromisos • Configuración en 5 min
+        <!-- Nombre -->
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md font-label-md text-on-surface-variant" for="nombre">
+            Nombre
+          </label>
+          <input
+            class="field rounded-xl border border-outline-variant px-4 py-3 text-body-md font-body-md text-on-surface bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            id="nombre"
+            name="nombre"
+            placeholder="Tu nombre"
+            type="text"
+          />
+          <p class="field-error text-label-sm font-label-sm text-error hidden"></p>
+        </div>
+
+        <!-- Apellido -->
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md font-label-md text-on-surface-variant" for="apellido">
+            Apellido
+          </label>
+          <input
+            class="field rounded-xl border border-outline-variant px-4 py-3 text-body-md font-body-md text-on-surface bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            id="apellido"
+            name="apellido"
+            placeholder="Tu apellido"
+            type="text"
+          />
+          <p class="field-error text-label-sm font-label-sm text-error hidden"></p>
+        </div>
+
+        <!-- Empresa -->
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md font-label-md text-on-surface-variant" for="empresa">
+            Empresa
+          </label>
+          <input
+            class="field rounded-xl border border-outline-variant px-4 py-3 text-body-md font-body-md text-on-surface bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            id="empresa"
+            name="empresa"
+            placeholder="Nombre de tu empresa"
+            type="text"
+          />
+          <p class="field-error text-label-sm font-label-sm text-error hidden"></p>
+        </div>
+
+        <!-- Tamaño del equipo -->
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md font-label-md text-on-surface-variant" for="tamano">
+            Tamaño del equipo
+          </label>
+          <select
+            class="field rounded-xl border border-outline-variant px-4 py-3 text-body-md font-body-md text-on-surface bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            id="tamano"
+            name="tamano"
+          >
+            <option value="" disabled selected>Selecciona...</option>
+            <option value="1-20">1 – 20 personas</option>
+            <option value="21-100">21 – 100 personas</option>
+            <option value="101-500">101 – 500 personas</option>
+            <option value="500+">Más de 500 personas</option>
+          </select>
+          <p class="field-error text-label-sm font-label-sm text-error hidden"></p>
+        </div>
+
+        <!-- Correo (span 2) -->
+        <div class="sm:col-span-2 flex flex-col gap-1">
+          <label class="text-label-md font-label-md text-on-surface-variant" for="email">
+            Correo corporativo
+          </label>
+          <input
+            class="field rounded-xl border border-outline-variant px-4 py-3 text-body-md font-body-md text-on-surface bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            id="email"
+            name="email"
+            placeholder="tu@empresa.com"
+            type="email"
+          />
+          <p class="field-error text-label-sm font-label-sm text-error hidden"></p>
+        </div>
+
+        <!-- Mensaje -->
+        <div class="sm:col-span-2 flex flex-col gap-1">
+          <label class="text-label-md font-label-md text-on-surface-variant" for="mensaje">
+            ¿Qué desafío quieres resolver?
+            <span class="text-on-surface-variant/60">(opcional)</span>
+          </label>
+          <textarea
+            class="rounded-xl border border-outline-variant px-4 py-3 text-body-md font-body-md text-on-surface bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition resize-none"
+            id="mensaje"
+            name="mensaje"
+            placeholder="Cuéntanos brevemente..."
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="sm:col-span-2 flex flex-col sm:flex-row gap-4 items-center justify-center mt-2">
+          <button
+            id="submit-btn"
+            class="primary-gradient text-on-primary font-label-md text-label-md font-bold px-10 py-4 rounded-full shadow-2xl shadow-primary/40 hover:scale-105 active:scale-95 transition-all w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
+            type="submit"
+          >
+            <span id="btn-label">Solicitar Demo</span>
+            <span id="btn-loading" class="hidden items-center gap-2">
+              <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+              </svg>
+              Enviando...
+            </span>
+          </button>
+          <p class="text-label-sm font-label-sm text-on-surface-variant">
+            Sin compromisos • Respondemos en menos de 24 h
+          </p>
+        </div>
+
+        <p id="form-error" class="sm:col-span-2 text-center text-label-md font-label-md text-error hidden"></p>
+      </form>
+    </div>
+
+    <!-- Estado: éxito -->
+    <div id="success-container" class="hidden py-8">
+      <span class="material-symbols-outlined text-primary text-6xl mb-6 block"
+        style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      <h2 class="font-headline-xl text-headline-xl mb-4">¡Solicitud recibida!</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">
+        Nos pondremos en contacto contigo en menos de 24 horas.
       </p>
     </div>
   </div>
 </section>
+
+<script define:vars={{ RECAPTCHA_SITE_KEY }}>
+  const form = document.getElementById('demo-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnLabel = document.getElementById('btn-label');
+  const btnLoading = document.getElementById('btn-loading');
+  const formError = document.getElementById('form-error');
+  const formContainer = document.getElementById('form-container');
+  const successContainer = document.getElementById('success-container');
+
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function setLoading(loading) {
+    submitBtn.disabled = loading;
+    btnLabel.classList.toggle('hidden', loading);
+    btnLoading.classList.toggle('hidden', !loading);
+    btnLoading.classList.toggle('inline-flex', loading);
+  }
+
+  function setFieldError(fieldId, message) {
+    const input = document.getElementById(fieldId);
+    const errorEl = input.parentElement.querySelector('.field-error');
+    if (message) {
+      input.classList.add('border-error', 'focus:ring-error/40', 'focus:border-error');
+      input.classList.remove('border-outline-variant');
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    } else {
+      input.classList.remove('border-error', 'focus:ring-error/40', 'focus:border-error');
+      input.classList.add('border-outline-variant');
+      errorEl.classList.add('hidden');
+    }
+  }
+
+  function clearAllErrors() {
+    form.querySelectorAll('.field').forEach((el) => {
+      el.classList.remove('border-error', 'focus:ring-error/40', 'focus:border-error');
+      el.classList.add('border-outline-variant');
+    });
+    form.querySelectorAll('.field-error').forEach((el) => el.classList.add('hidden'));
+    formError.classList.add('hidden');
+  }
+
+  function validate(fields) {
+    let valid = true;
+
+    if (!fields.nombre) {
+      setFieldError('nombre', 'El nombre es requerido.');
+      valid = false;
+    }
+    if (!fields.apellido) {
+      setFieldError('apellido', 'El apellido es requerido.');
+      valid = false;
+    }
+    if (!fields.empresa) {
+      setFieldError('empresa', 'El nombre de la empresa es requerido.');
+      valid = false;
+    }
+    if (!fields.tamano) {
+      setFieldError('tamano', 'Selecciona el tamaño del equipo.');
+      valid = false;
+    }
+    if (!fields.email) {
+      setFieldError('email', 'El correo es requerido.');
+      valid = false;
+    } else if (!EMAIL_REGEX.test(fields.email)) {
+      setFieldError('email', 'Ingresa un correo válido (ej: tu@empresa.com).');
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAllErrors();
+
+    const fields = {
+      nombre: form.nombre.value.trim(),
+      apellido: form.apellido.value.trim(),
+      empresa: form.empresa.value.trim(),
+      email: form.email.value.trim(),
+      tamano: form.tamano.value,
+      mensaje: form.mensaje.value.trim(),
+    };
+
+    if (!validate(fields)) return;
+
+    setLoading(true);
+
+    try {
+      const recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+        action: 'submit_demo',
+      });
+
+      const res = await fetch('/api/send-demo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...fields, recaptchaToken }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Error desconocido');
+
+      formContainer.classList.add('hidden');
+      successContainer.classList.remove('hidden');
+    } catch (err) {
+      formError.textContent = err.message || 'Ocurrió un error. Intenta nuevamente.';
+      formError.classList.remove('hidden');
+      setLoading(false);
+    }
+  });
+</script>
+
+<script
+  is:inline
+  src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
+></script>
