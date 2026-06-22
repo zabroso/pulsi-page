@@ -84,7 +84,6 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -93,12 +92,10 @@ jobs:
           node-version: 20
           cache: npm
 
-      - uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PULSI_2E80D }}
-
       - name: Install function dependencies
         run: npm ci --prefix functions
 
       - name: Deploy functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: npx firebase-tools deploy --only functions --project pulsi-2e80d
